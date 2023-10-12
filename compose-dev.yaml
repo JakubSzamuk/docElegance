@@ -1,12 +1,22 @@
+version: '3.8'
 services:
-  app:
-    entrypoint:
-    - sleep
-    - infinity
-    image: docker/dev-environments-javascript:stable-1
-    init: true
-    volumes:
-    - type: bind
-      source: /var/run/docker.sock
-      target: /var/run/docker.sock
-
+  docelegance:
+    container_name: frontenddocelegance
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - 3005:3000
+    stdin_open: true
+    tty: true
+    depends_on:
+      - db
+  db:
+    image: mysql
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password

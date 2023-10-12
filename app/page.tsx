@@ -8,7 +8,7 @@ export default function Home() {
         <div className='flex gap-8'>
           <div className='flex flex-col gap-8'>
             <div className='p-8 text-white bg-primary mono text-4xl'>
-              <p>Doc Elegance</p>
+              <p>Doc Elegance in </p>
             </div>
             <div className='p-8 bg-primary flex flex-col justify-center'>
               <DocIcon />
