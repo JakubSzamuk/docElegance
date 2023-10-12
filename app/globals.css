@@ -12,3 +12,40 @@ body, html {
 .line {
   font-family: 'flow-rounded', ;
 }
+
+input, input:focus, textarea, textarea:focus {
+  background: none;
+  outline: none;
+  display: flex;
+  padding: 10px;
+}
+
+.hideMe {
+  opacity: 0;
+}
+.renderedMD {
+  padding: 10px;
+  max-width: 80%;
+}
+
+.hideMe:focus ~ .renderedMD {
+  opacity: 0;
+}
+.hideMe:focus {
+  opacity: 1;
+}
+.textBoxContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 60vh;
+}
+.textBoxContainer div, textarea {
+  grid-row-start: 1;
+  grid-column-start: 1;
+}
+.renderedMD h1 {
+  font-size: 50px;
+}
+.renderedMD ul { 
+  list-style-type: disc; 
+}
