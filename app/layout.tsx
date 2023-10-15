@@ -1,11 +1,8 @@
+'use client'
 import './globals.css'
 import type { Metadata } from 'next'
+import { useSession, signIn, SessionProvider } from "next-auth/react"
 
-
-export const metadata: Metadata = {
-  title: 'Doc Elegance',
-  description: 'The perfect Documents app for the minimalist',
-}
 
 export default function RootLayout({
   children,
@@ -20,7 +17,11 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Flow+Rounded&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body>{children}</body>
+      <body>
+        <SessionProvider>
+          {children}
+        </SessionProvider>
+      </body>
     </html>
   )
 }

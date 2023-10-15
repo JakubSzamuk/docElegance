@@ -14,7 +14,6 @@ const authOptions: NextAuthOptions = {
       clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET
     }),
   ],
-  session: { strategy: "jwt" }
 };
 
 const handler = NextAuth(authOptions);
