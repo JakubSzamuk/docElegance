@@ -26,7 +26,6 @@ const Home = () => {
             </div>
           </div>
           <div className='flex flex-col'>
-
           </div>
         </div>
         <div>

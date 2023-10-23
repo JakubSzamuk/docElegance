@@ -16,12 +16,14 @@
     "axios": "^1.5.1",
     "framer-motion": "^10.16.4",
     "jspdf": "^2.5.1",
+    "marked": "^9.1.2",
     "marked-react": "^2.0.0",
     "next": "13.5.4",
     "next-auth": "^4.23.2",
     "prisma": "^5.4.2",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "use-debounce": "^9.0.4"
   },
   "devDependencies": {
     "@types/node": "^20",
