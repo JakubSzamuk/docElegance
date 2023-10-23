@@ -3,15 +3,23 @@ import React, { useEffect } from 'react'
 import DocIcon from './DocIcon'
 import { signOut, useSession } from 'next-auth/react'
 import { redirect } from 'next/navigation'
+import axios from 'axios'
+import { useRouter } from 'next/router'
 
 const Home = () => {
   const { data: session, status } = useSession()
+
+
 
   useEffect(() => {
     if (status === "unauthenticated") {
       redirect("/login")
     }
   }, [session])
+
+  const createFile = async () => {
+    await axios.post("/api/fetchdoc", {}).then(data => redirect(`/doc/${data.data.documentId}`))
+  }
 
   return (
     <div className='w-screen h-screen flex justify-center items-center'>
@@ -29,7 +37,7 @@ const Home = () => {
           </div>
         </div>
         <div>
-
+          <button onClick={() => createFile()}>Create file</button>
         </div>
       </div>
       <button onClick={() => signOut()}>SIGNOUT</button>
