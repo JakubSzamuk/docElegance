@@ -9,7 +9,7 @@ const prisma = new PrismaClient()
 export const revalidate = 0
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  const body = await req.json();
+  const body = await req.json()
   const session = await getServerSession(authOptions);
 
   if (session?.user) {
@@ -17,29 +17,49 @@ export async function POST(req: NextRequest, res: NextResponse) {
       where: {
         email: session?.user?.email
       }
-    }))?.id
+    }))!.id
   
     try {
       if (body.id == null) {
-        return NextResponse.json({ status: false })
+        const tempId = (userId + Math.random())
+        await prisma.savedDocuments.create({
+          data: {
+            uid: userId,
+            title: tempId,
+            body: ""
+          }
+        })
+        const docId = await prisma.savedDocuments.findFirst({
+          where: {
+            title: tempId
+          }
+        })
+        return NextResponse.json({ documentId: docId.id })
       } else {
-        await prisma.savedDocuments.update({
+        const fetchedDoc = await prisma.savedDocuments.findFirst({
           where: {
             id: body.id,
             uid: userId
           },
-          data: {
-            title: body.docTitle,
-            body: body.docBody
-          }
         })
-        return NextResponse.json({ status: true })
+        if (fetchedDoc == null) {
+          return NextResponse.json({ status: 404 })
+        } else {
+          return NextResponse.json({ documentId: fetchedDoc.id, docTitle: fetchedDoc.title, docBody: fetchedDoc.body })
+        }
       }
     } catch (err) {
       return NextResponse.json(`error, ${err}`)
     } 
+
+    return NextResponse.json("Success")
   } else {
     return NextResponse.json("You are not signed in")
   }
+
+
+  // const data = await prisma.test.findMany({})
+
+  console.log(data)
 }
   
