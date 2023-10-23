@@ -55,3 +55,12 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model SavedDocuments {
+  id  String  @id @default(uuid())
+  uid String
+
+  title  String
+  body  String
+}
+

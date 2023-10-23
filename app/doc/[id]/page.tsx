@@ -1,23 +1,17 @@
 'use client'
 import { ArrowSquareDown, ArrowSquareIn, Check, Clipboard, FloppyDisk } from '@phosphor-icons/react'
 import Markdown from 'marked-react'
+import marked from 'marked'
 import React, { useEffect, useRef, useState } from 'react'
 import { useAnimationControls, motion } from 'framer-motion'
 import axios from 'axios'
 import jsPDF from "jspdf";
+import { useDebounce } from 'use-debounce';
 
 
 const page = () => {
 
   const mdRefContainer = useRef<Node>(null)
-
-  //   Copyright (c) 2010-2021 James Hall, https://github.com/MrRio/jsPDF (c) 2015-2021 yWorks GmbH, https://www.yworks.com/
-
-  // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-  // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-  // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
   useEffect(() => {
     const fileData = axios.get("/api/getDoc").then(data => data)
@@ -28,32 +22,32 @@ const page = () => {
 
 
   const [textContent, setTextContent] = useState('')
+  const [saveText] = useDebounce(textContent, 1000)
+
+
   const [titleContent, setTitleContent] = useState('Untitled')
-  const [pastText, setPastText] = useState<number[]>([])
+
 
   const clipboardControls = useAnimationControls()
-  const [isRecording, setIsRecording] = useState(false)
+
+  const autosave = async () => {
+    await axios.post("/api/autosaver", {
+      docBody: saveText,
+      docTitle: titleContent,
+    })
+  }
 
   useEffect(() => {
     // https://www.npmjs.com/package/use-debounce
-    if (isRecording == false) {
-      setIsRecording(true)
-      const currentTextContent = textContent
-      setTimeout(() => {
-        if (currentTextContent === textContent) {
-          console.log("not typing")
-        }
-        setIsRecording(false)
-      }, 5000)
-    }
-  }, [textContent])
+    autosave()
 
+  }, [saveText])
 
 
   const testPdf = () => {
+    const htmlMD = marked.parse(textContent)
     const doc = new jsPDF()
-    console.log(mdRefContainer.current.outerHTML)
-    doc.html(mdRefContainer.current.innerHTML, { callback: () => doc.save("test.pdf") })
+    doc.fromHtml(htmlMD, { callback: () => doc.save("test.pdf") })
   }
 
   return (
