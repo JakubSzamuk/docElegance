@@ -9,7 +9,7 @@ const prisma = new PrismaClient()
 export const revalidate = 0
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  const body = await req.json();
+  const body = await req.json()
   const session = await getServerSession(authOptions);
 
   if (session?.user) {
@@ -17,27 +17,21 @@ export async function POST(req: NextRequest, res: NextResponse) {
       where: {
         email: session?.user?.email
       }
-    }))?.id
+    }))!.id
   
     try {
-      if (body.id == null) {
-        return NextResponse.json({ status: false })
-      } else {
-        await prisma.savedDocuments.update({
-          where: {
-            id: body.id,
-            uid: userId
-          },
-          data: {
-            title: body.docTitle || "Untitled",
-            body: body.docBody
-          }
-        })
-        return NextResponse.json({ status: true })
-      }
+      const docId = await prisma.savedDocuments.delete({
+        where: {
+          uid: userId,
+          id: body.id
+        },
+      })
+
+      return NextResponse.json({ status: true })
     } catch (err) {
       return NextResponse.json(`error, ${err}`)
     } 
+
   } else {
     return NextResponse.json("You are not signed in")
   }

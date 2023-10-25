@@ -21,17 +21,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
   
     try {
       if (body.id == null) {
-        const tempId = (userId + Math.random())
-        await prisma.savedDocuments.create({
+        const docId = await prisma.savedDocuments.create({
           data: {
             uid: userId,
-            title: tempId,
+            title: "Untitled",
             body: ""
-          }
-        })
-        const docId = await prisma.savedDocuments.findFirst({
-          where: {
-            title: tempId
           }
         })
         return NextResponse.json({ documentId: docId.id })
@@ -45,7 +39,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         if (fetchedDoc == null) {
           return NextResponse.json({ status: 404 })
         } else {
-          return NextResponse.json({ documentId: fetchedDoc.id, docTitle: fetchedDoc.title, docBody: fetchedDoc.body })
+          return NextResponse.json({ status: true, documentId: fetchedDoc.id, docTitle: fetchedDoc.title, docBody: fetchedDoc.body })
         }
       }
     } catch (err) {
