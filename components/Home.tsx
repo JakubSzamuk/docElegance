@@ -59,7 +59,7 @@ const Home = () => {
               <p>Doc Elegance</p>
             </div>
             <div className='p-8 bg-primary flex flex-col justify-center gap-4'>
-              {userData && userData.docs.map((doc: docType) => <DocIcon title={doc.title} id={doc.id} />)}
+              {userData && userData.docs.map((doc: docType, key) => <DocIcon key={key} title={doc.title} id={doc.id} />)}
             </div>
           </div>
           <div className='flex flex-col'>

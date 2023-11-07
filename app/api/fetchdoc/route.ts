@@ -50,10 +50,5 @@ export async function POST(req: NextRequest, res: NextResponse) {
   } else {
     return NextResponse.json("You are not signed in")
   }
-
-
-  // const data = await prisma.test.findMany({})
-
-  console.log(data)
 }
   

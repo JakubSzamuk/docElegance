@@ -43,7 +43,14 @@ input, input:focus, textarea, textarea:focus {
   grid-column-start: 1;
 }
 .renderedMD h1 {
-  font-size: 50px;
+  font-size: 40px;
+}
+
+blockquote {
+  border-left: 5px solid #F8F8F2;
+  padding-left: 10px;
+  margin-left: 10px;
+  font-style: italic;
 }
 .renderedMD ul { 
   list-style-type: disc; 

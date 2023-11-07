@@ -1,21 +1,19 @@
 'use client'
-import { ArrowSquareDown, ArrowSquareIn, Check, Clipboard, FloppyDisk, Link } from '@phosphor-icons/react'
+import { ArrowLeft, ArrowSquareDown, ArrowSquareIn, Check, Clipboard, FloppyDisk, Link } from '@phosphor-icons/react'
 import Markdown from 'marked-react'
-// import marked from 'marked'
 import React, { useEffect, useRef, useState } from 'react'
 import { useAnimationControls, motion } from 'framer-motion'
 import axios from 'axios'
 import jsPDF from "jspdf";
 import { useDebounce } from 'use-debounce';
+import Image from 'next/image'
+import { redirect } from 'next/navigation'
 
 
-const page = ({ params }: any) => {
-
-
-
+const Page = ({ params }: any) => {
   const identifier = params.id
 
-  const mdRefContainer = useRef<Node>(null)
+  const mdRefContainer = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     axios.post("/api/fetchdoc", { id: identifier }).then(data => {
@@ -59,14 +57,13 @@ const page = ({ params }: any) => {
     autosave()
   }, [saveText, saveTitle])
 
-  console.log(isSaving)
-
 
   return (
     <div className='w-screen min-h-screen flex justify-center overflow-x-hidden'>
-      <div className={`flex flex-col text-white mono p-12 bg-primary rounded-md mt-24 max-w-2/3 ${isSaving ? "" : "collapse"}`}>
+      <div className={`flex flex-col text-white mono p-12 bg-primary rounded-md mt-24 max-w-2/3 ${isSaving ? "" : "collapse"} z-20`}>
+        <a className='absolute left-0 top-0 m-8 p-4' href='/'><ArrowLeft size={48} /></a>
         <div className='relative flex w-full text-5xl items-center'>
-          <input value={titleContent} onChange={(e) => setTitleContent(e.target.value)} className='w-full'/>
+          <input value={titleContent} onChange={(e) => setTitleContent(e.target.value)} className='w-full bold'/>
           <div className='p-2 flex items-center gap-2 rounded-md bg-primary'>
             <button className='p-2' onClick={() => {navigator.clipboard.writeText(textContent); clipboardControls.start("check"); setTimeout(() => {
               clipboardControls.start("initial")
@@ -125,8 +122,12 @@ const page = ({ params }: any) => {
       <div className={`mt-96 bg-primary text-white mono text-8xl p-8 ${isSaving ? "collapse" : ""}`}>
         <p>Loading...</p>
       </div>
+      <div className='fixed overflow-hidden w-screen h-screen'>
+        <Image className='absolute -top-64 left-0' width={800} height={2000} alt='background orb' src='/orb1.svg' />
+        <Image className='absolute -bottom-64 -right-40' width={1000} height={2000} alt='background orb' src='/orb2.svg' />
+      </div>
     </div>
   )
 }
 
-export default page
+export default Page
