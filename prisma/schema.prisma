@@ -61,6 +61,6 @@ model SavedDocuments {
   uid String
 
   title  String
-  body  String @db.Text
+  body  String @db.MediumText
 }
 
