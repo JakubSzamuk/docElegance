@@ -15,7 +15,7 @@ RUN --mount=type=bind,source=package.json,target=package.json \
 RUN chown -R node /usr/src/app
 USER node
 COPY . .
-CMD ["yarn", "dev"]
+CMD tail -f /usr/src/package.json
 
 FROM base as prod
 ENV NODE_ENV production
