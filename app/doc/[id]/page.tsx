@@ -8,6 +8,7 @@ import jsPDF from "jspdf";
 import { useDebounce } from 'use-debounce';
 import Image from 'next/image'
 import { redirect } from 'next/navigation'
+import Loading from '@/components/Loading'
 
 
 const Page = ({ params }: any) => {
@@ -119,8 +120,8 @@ const Page = ({ params }: any) => {
           </div>
         </div>
       </div>
-      <div className={`mt-96 bg-primary text-white mono text-8xl p-8 ${isSaving ? "collapse" : ""}`}>
-        <p>Loading...</p>
+      <div className={`${isSaving ? "collapse" : ""} absolute w-full h-full`}>
+        <Loading />
       </div>
       <div className='fixed overflow-hidden w-screen h-screen'>
         <Image className='absolute -top-64 left-0' width={800} height={2000} alt='background orb' src='/orb1.svg' />
