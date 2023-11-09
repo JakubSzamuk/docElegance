@@ -33,9 +33,10 @@ const Page = ({ params }: any) => {
 
 
   const [titleContent, setTitleContent] = useState('')
-  const [saveTitle] = useDebounce(titleContent, 500)
+  const [saveTitle] = useDebounce(titleContent, 500, { maxWait: 4000 })
 
   const clipboardControls = useAnimationControls()
+  const saveControls = useAnimationControls()
 
   const autosave = async () => {
     if (isSaving) {
@@ -44,8 +45,8 @@ const Page = ({ params }: any) => {
         docBody: saveText,
         docTitle: titleContent,
       }).then(data => {
-        console.log(data.data)
         if (data.data.status == true) {
+          saveControls.start("check")
           setIsSaving(true)
         } else {
           setIsSaving(data.data.status)
@@ -53,6 +54,9 @@ const Page = ({ params }: any) => {
       })
     }
   }
+  useEffect(() => {
+    saveControls.start("initial")
+  }, [textContent, titleContent])
 
   useEffect(() => {
     autosave()
@@ -106,8 +110,40 @@ const Page = ({ params }: any) => {
             <button className='p-2' onClick={() => {navigator.clipboard.writeText(`https://docs.JakubSzamuk.co.uk/doc/${identifier}`);}}>
               <Link />
             </button>
-            <button className='p-2' onClick={() => {/*testPdf()*/}}>
-              <FloppyDisk />
+            <button className='p-2' onClick={() => {autosave()}}>
+              <motion.div
+                  className='absolute'
+                  animate={saveControls}
+                  variants={{
+                    initial: {
+                      rotate: 0,
+                      opacity: 1
+                    },
+                    check: {
+                      rotate: 360,
+                      opacity: 0
+                    }
+                  }}
+                  initial="initial"
+                >
+                  <FloppyDisk />
+                </motion.div>
+                <motion.div
+                  animate={saveControls}
+                  variants={{
+                    initial: {
+                      rotate: 0,
+                      opacity: 0
+                    },
+                    check: {
+                      rotate: 360,
+                      opacity: 1
+                    }
+                  }}
+                  initial="initial"
+                >
+                  <Check />
+                </motion.div>
             </button>
           </div>
         </div>

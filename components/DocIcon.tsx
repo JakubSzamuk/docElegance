@@ -1,7 +1,9 @@
-import React from 'react'
+'use client'
+import React, { useState } from 'react'
 import { docType } from './Home'
 import { Trash } from '@phosphor-icons/react'
 import axios from 'axios'
+import { redirect } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 
 const DocIcon = ({ title, id }: docType) => {
@@ -11,17 +13,21 @@ const DocIcon = ({ title, id }: docType) => {
     axios.post("/api/removeDoc", {
       id: id,
     })
+    setDoesExist(false)
   }
-  
-  
+
+  const [doesExist, setDoesExist] = useState(true)
   return (
-    <div className='flex bg-primary items-center justify-center px-2'>
-      <button className='p-2 flex flex-col relative items-start w-full' onClick={() => push(`/doc/${id}`)}>
-        <p className='text-xl'>{title}</p>
+    <div className={`flex-col ${doesExist ? "" : "hidden"}`}>
+      <button onClick={() => push(`/doc/${id}`)}>
+        
       </button>
-      <button onClick={() => {confirm(`are you sure you want to remove ${title}?`) && deleteDoc(); window.location.reload()}} className='z-10'>
-        <Trash size={32} />
-      </button>
+      <div className='flex'>
+        <button onClick={() => push(`/doc/${id}`)}  className='text-xl'>{title}</button>
+        <button onClick={() => {confirm(`are you sure you want to remove ${title}?`) && deleteDoc()}} className='self-end -mt-5 z-10 justify-self-end'>
+          <Trash size={32} />
+        </button>
+      </div>
     </div>
   )
 }
