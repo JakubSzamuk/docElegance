@@ -54,12 +54,12 @@ const Home = () => {
   return (
     <div className='w-screen h-screen flex justify-center items-center'>
       <div className='flex flex-col gap-8 z-20'>
-        <div className='flex gap-8'>
+        <div className='flex flex-col md:flex-row gap-8'>
           <div className='flex flex-col gap-8'>
             <div className='p-8 text-white bg-primary mono text-4xl h-24'>
               <p>Doc Elegance</p>
             </div>
-            <div className='p-8 bg-primary grid grid-flow-row grid-cols-2 justify-center gap-4'>
+            <div className='p-8 bg-primary grid grid-flow-row grid-cols-1 md:grid-cols-2 justify-center gap-4'>
               {userData && userData.docs.map((doc: docType, key) => <DocIcon key={key} title={doc.title} id={doc.id} />)}
             </div>
           </div>

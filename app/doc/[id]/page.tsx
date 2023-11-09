@@ -32,7 +32,7 @@ const Page = ({ params }: any) => {
 
 
   const [titleContent, setTitleContent] = useState('')
-  const [saveTitle] = useDebounce(titleContent, 500)
+  const [saveTitle] = useDebounce(titleContent, 500, { maxWait: 4000 })
 
   const clipboardControls = useAnimationControls()
   const saveControls = useAnimationControls()
