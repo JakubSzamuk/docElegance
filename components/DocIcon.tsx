@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import { docType } from './Home'
 import { Trash } from '@phosphor-icons/react'
 import axios from 'axios'
@@ -13,11 +13,12 @@ const DocIcon = ({ title, id }: docType) => {
     axios.post("/api/removeDoc", {
       id: id,
     })
+    setDoesExist(false)
   }
-  
-  
+
+  const [doesExist, setDoesExist] = useState(true)
   return (
-    <div className='flex-col'>
+    <div className={`flex-col ${doesExist ? "" : "hidden"}`}>
       <button onClick={() => push(`/doc/${id}`)}>
         
       </button>
