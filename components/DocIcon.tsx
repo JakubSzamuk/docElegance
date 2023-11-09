@@ -1,10 +1,14 @@
+'use client'
 import React from 'react'
 import { docType } from './Home'
 import { Trash } from '@phosphor-icons/react'
 import axios from 'axios'
 import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 const DocIcon = ({ title, id }: docType) => {
+  const { push } = useRouter()
+  
   const deleteDoc = () => {
     axios.post("/api/removeDoc", {
       id: id,
@@ -13,12 +17,17 @@ const DocIcon = ({ title, id }: docType) => {
   
   
   return (
-    <button className='p-2 bg-primary flex flex-col relative items-start' onClick={() => redirect(`/doc/${id}`)}>
-      <p className='text-xl'>{title}</p>
-      <button onClick={() => {confirm(`are you sure you want to remove ${title}?`) && deleteDoc()}} className='self-end -mt-5 z-10'>
-        <Trash size={32} />
+    <div className='flex-col'>
+      <button onClick={() => push(`/doc/${id}`)}>
+        
       </button>
-    </button>
+      <div className='flex'>
+        <button onClick={() => push(`/doc/${id}`)}  className='text-xl'>{title}</button>
+        <button onClick={() => {confirm(`are you sure you want to remove ${title}?`) && deleteDoc()}} className='self-end -mt-5 z-10 justify-self-end'>
+          <Trash size={32} />
+        </button>
+      </div>
+    </div>
   )
 }
 
