@@ -26,7 +26,7 @@ RUN mkdir -p /home/node/Downloads \
     && chown -R node:node /home/node
 USER node
 COPY . .
-CMD yarn dev
+CMD tail -f /usr/src/package.json
 
 FROM base as prod
 ENV NODE_ENV production
