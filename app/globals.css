@@ -37,6 +37,8 @@ input, input:focus, textarea, textarea:focus {
   display: grid;
   grid-template-columns: 1fr;
   min-height: 60vh;
+  width: 52vw;
+  max-width: 52vw;
 }
 .textBoxContainer div, textarea {
   grid-row-start: 1;

@@ -148,7 +148,7 @@ const Page = ({ params }: any) => {
         </div>
         <div className='textBoxContainer'>
           <textarea placeholder='Time to type something' className='hideMe flex z-10' value={textContent} onChange={(e) => setTextContent(e.target.value)} /> 
-          <div className='renderedMD flex flex-col gap-4' ref={mdRefContainer}>
+          <div className='renderedMD flex flex-col gap-4 overflow-clip w-full' ref={mdRefContainer}>
             <Markdown breaks={true} gfm={true}>
               {textContent || "Time to type something"}
             </Markdown>
