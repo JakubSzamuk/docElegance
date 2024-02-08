@@ -1,10 +1,8 @@
-import React, { ComponentProps } from "react";
+import React from "react";
 
-const Loading = (props: ComponentProps<"div">) => {
+const Loading = () => {
   return (
-    <div
-      className={`w-full h-full flex justify-center items-center ${props.className}`}
-    >
+    <div className="w-full h-full flex justify-center items-center">
       <div className="flex justify-center items-center h-12 w-12 rounded-full overflow-hidden relative">
         <div className="w-full h-full bg-primary"></div>
         <div className="w-full h-full absolute animate-spin">
