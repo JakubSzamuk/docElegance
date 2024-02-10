@@ -4,13 +4,14 @@ services:
     container_name: frontenddocelegance
     build:
       context: .
-      target: dev
+      target: runner
     ports:
       - 80:3000
     depends_on:
       - db
     volumes:
-      - ./:/usr/src/
+      - ./:/usr/src
+    platform: linux/arm64/v8
   db:
     image: mysql
     restart: unless-stopped
