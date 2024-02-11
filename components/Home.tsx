@@ -58,13 +58,13 @@ const Home = () => {
 
   return (
     <div className="w-screen h-screen flex justify-center items-center">
-      <div className="h-1/2 w-1/2 flex flex-col z-20">
+      <div className="h-1/2 w-11/12 md:w-1/2 flex flex-col z-20 mono">
         <div className="flex items-center">
           <h1 className="self-end text-white">DocElegance</h1>
           <div className="flex items-center justify-center ml-auto gap-2 bg-primary w-28 h-14 rounded-md mb-2">
             {userData ? (
               <>
-                <Image
+                <img
                   src={userData!.account!.image!}
                   width={40}
                   height={40}
@@ -88,7 +88,7 @@ const Home = () => {
           </div>
 
           {userData ? (
-            <div className="w-full grid grid-cols-4 grid-flow-row mt-2 px-4">
+            <div className="w-full grid grid-cols-1 md:grid-cols-4 grid-flow-row mt-2 px-4">
               {userData!.docs.length >= 1 ? (
                 userData!.docs.map((doc: docType, key) => (
                   <DocIcon key={key} title={doc.title} id={doc.id} />

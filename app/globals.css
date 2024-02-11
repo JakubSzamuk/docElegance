@@ -2,18 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-body, html {
-  background-color: #14161A;
+body,
+html {
+  background-color: #14161a;
 }
 
 .mono {
-  font-family: 'cutive-mono', monospace;
+  font-family: "Space Mono", monospace;
 }
 .line {
-  font-family: 'flow-rounded', ;
+  font-family: "flow-rounded";
 }
 
-input, input:focus, textarea, textarea:focus {
+input,
+input:focus,
+textarea,
+textarea:focus {
   background: none;
   outline: none;
   display: flex;
@@ -40,7 +44,8 @@ input, input:focus, textarea, textarea:focus {
   width: 52vw;
   max-width: 52vw;
 }
-.textBoxContainer div, textarea {
+.textBoxContainer div,
+textarea {
   grid-row-start: 1;
   grid-column-start: 1;
 }
@@ -49,17 +54,17 @@ input, input:focus, textarea, textarea:focus {
 }
 
 blockquote {
-  border-left: 5px solid #F8F8F2;
+  border-left: 5px solid #f8f8f2;
   padding-left: 10px;
   margin-left: 10px;
   font-style: italic;
 }
-.renderedMD ul { 
-  list-style-type: disc; 
+.renderedMD ul {
+  list-style-type: disc;
 }
 pre {
   background-color: #111111;
-  color: #F8F8F2;
+  color: #f8f8f2;
   padding: 5px;
   border-radius: 5px;
 }

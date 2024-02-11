@@ -92,13 +92,13 @@ const Page = ({ params }: any) => {
 
   return (
     <div className="w-screen min-h-screen flex justify-center overflow-x-hidden">
-      <div className="flex flex-col text-white mono p-12 bg-primary rounded-md mt-24 w-[58vw] z-20">
+      <div className="flex flex-col text-white mono p-2 md:p-12 bg-primary rounded-md mt-24 w-[94vw] md:w-[58vw] z-20">
         <a className="absolute left-0 top-0 m-8 p-4" href="/">
           <ArrowLeft size={48} />
         </a>
         {isSaving ? (
           <>
-            <div className="relative flex w-full text-5xl items-center">
+            <div className="relative flex flex-col md:flex-row w-full text-5xl items-center">
               <input
                 value={titleContent}
                 onChange={(e) => setTitleContent(e.target.value)}
